@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="projects_management_systemModelStoreContainer" CdmEntityContainer="projects_management_systemEntities">
+    <EntitySetMapping Name="pm_feedback">
+      <EntityTypeMapping TypeName="projects_management_systemModel.pm_feedback">
+        <MappingFragment StoreEntitySet="pm_feedback">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="evaluator_id" ColumnName="evaluator_id" />
+          <ScalarProperty Name="evaluated_id" ColumnName="evaluated_id" />
+          <ScalarProperty Name="rating" ColumnName="rating" />
+          <ScalarProperty Name="reason" ColumnName="reason" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pm_personSkill">
+      <EntityTypeMapping TypeName="projects_management_systemModel.pm_personSkill">
+        <MappingFragment StoreEntitySet="pm_personSkill">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="project_manger_id" ColumnName="project_manger_id" />
+          <ScalarProperty Name="skill" ColumnName="skill" />
+          <ScalarProperty Name="ps_level" ColumnName="ps_level" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pm_project">
+      <EntityTypeMapping TypeName="projects_management_systemModel.pm_project">
+        <MappingFragment StoreEntitySet="pm_project">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="title" ColumnName="title" />
+          <ScalarProperty Name="p_description" ColumnName="p_description" />
+          <ScalarProperty Name="admin_approved" ColumnName="admin_approved" />
+          <ScalarProperty Name="project_manger_id" ColumnName="project_manger_id" />
+          <ScalarProperty Name="p_state" ColumnName="p_state" />
+          <ScalarProperty Name="price" ColumnName="price" />
+          <ScalarProperty Name="start_date" ColumnName="start_date" />
+          <ScalarProperty Name="end_date" ColumnName="end_date" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pm_projectComments">
+      <EntityTypeMapping TypeName="projects_management_systemModel.pm_projectComments">
+        <MappingFragment StoreEntitySet="pm_projectComments">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="project_id" ColumnName="project_id" />
+          <ScalarProperty Name="comment" ColumnName="comment" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pm_projectTeam">
+      <EntityTypeMapping TypeName="projects_management_systemModel.pm_projectTeam">
+        <MappingFragment StoreEntitySet="pm_projectTeam">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="project_id" ColumnName="project_id" />
+          <ScalarProperty Name="member_id" ColumnName="member_id" />
+          <ScalarProperty Name="postion" ColumnName="postion" />
+          <ScalarProperty Name="state" ColumnName="state" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pm_Role">
+      <EntityTypeMapping TypeName="projects_management_systemModel.pm_Role">
+        <MappingFragment StoreEntitySet="pm_Role">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="role_title" ColumnName="role_title" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pm_User">
+      <EntityTypeMapping TypeName="projects_management_systemModel.pm_User">
+        <MappingFragment StoreEntitySet="pm_User">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="lastname" ColumnName="lastname" />
+          <ScalarProperty Name="mobile" ColumnName="mobile" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="photo" ColumnName="photo" />
+          <ScalarProperty Name="description" ColumnName="description" />
+          <ScalarProperty Name="role_id" ColumnName="role_id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,164 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="projects_management_systemModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="pm_feedback">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="evaluator_id" Type="int" />
+    <Property Name="evaluated_id" Type="int" />
+    <Property Name="rating" Type="int" />
+    <Property Name="reason" Type="text" />
+  </EntityType>
+  <EntityType Name="pm_personSkill">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="project_manger_id" Type="int" />
+    <Property Name="skill" Type="varchar" MaxLength="255" />
+    <Property Name="ps_level" Type="int" />
+  </EntityType>
+  <EntityType Name="pm_project">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="title" Type="varchar" MaxLength="255" />
+    <Property Name="p_description" Type="text" />
+    <Property Name="admin_approved" Type="int" />
+    <Property Name="project_manger_id" Type="int" />
+    <Property Name="p_state" Type="int" />
+    <Property Name="price" Type="int" />
+    <Property Name="start_date" Type="datetime" />
+    <Property Name="end_date" Type="datetime" />
+  </EntityType>
+  <EntityType Name="pm_projectComments">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="project_id" Type="int" />
+    <Property Name="comment" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="pm_projectTeam">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="project_id" Type="int" />
+    <Property Name="member_id" Type="int" />
+    <Property Name="postion" Type="int" />
+    <Property Name="state" Type="int" />
+  </EntityType>
+  <EntityType Name="pm_Role">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="role_title" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="pm_User">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="firstname" Type="varchar" MaxLength="255" />
+    <Property Name="lastname" Type="varchar" MaxLength="255" />
+    <Property Name="mobile" Type="varchar" MaxLength="255" />
+    <Property Name="email" Type="varchar" MaxLength="255" />
+    <Property Name="password" Type="varchar" MaxLength="255" />
+    <Property Name="photo" Type="varchar" MaxLength="255" />
+    <Property Name="description" Type="text" />
+    <Property Name="role_id" Type="int" />
+  </EntityType>
+  <Association Name="FK__pm_person__proje__1DE57479">
+    <End Role="pm_User" Type="Self.pm_User" Multiplicity="0..1" />
+    <End Role="pm_personSkill" Type="Self.pm_personSkill" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pm_User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="pm_personSkill">
+        <PropertyRef Name="project_manger_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__pm_projec__proje__15502E78">
+    <End Role="pm_User" Type="Self.pm_User" Multiplicity="0..1" />
+    <End Role="pm_project" Type="Self.pm_project" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pm_User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="pm_project">
+        <PropertyRef Name="project_manger_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__pm_projec__proje__1A14E395">
+    <End Role="pm_project" Type="Self.pm_project" Multiplicity="0..1" />
+    <End Role="pm_projectTeam" Type="Self.pm_projectTeam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pm_project">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="pm_projectTeam">
+        <PropertyRef Name="project_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__pm_projec__proje__20C1E124">
+    <End Role="pm_project" Type="Self.pm_project" Multiplicity="0..1" />
+    <End Role="pm_projectComments" Type="Self.pm_projectComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pm_project">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="pm_projectComments">
+        <PropertyRef Name="project_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__pm_User__role_id__1273C1CD">
+    <End Role="pm_Role" Type="Self.pm_Role" Multiplicity="0..1" />
+    <End Role="pm_User" Type="Self.pm_User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pm_Role">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="pm_User">
+        <PropertyRef Name="role_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="projects_management_systemModelStoreContainer">
+    <EntitySet Name="pm_feedback" EntityType="Self.pm_feedback" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="pm_personSkill" EntityType="Self.pm_personSkill" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="pm_project" EntityType="Self.pm_project" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="pm_projectComments" EntityType="Self.pm_projectComments" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="pm_projectTeam" EntityType="Self.pm_projectTeam" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="pm_Role" EntityType="Self.pm_Role" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="pm_User" EntityType="Self.pm_User" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__pm_person__proje__1DE57479" Association="Self.FK__pm_person__proje__1DE57479">
+      <End Role="pm_User" EntitySet="pm_User" />
+      <End Role="pm_personSkill" EntitySet="pm_personSkill" />
+    </AssociationSet>
+    <AssociationSet Name="FK__pm_projec__proje__15502E78" Association="Self.FK__pm_projec__proje__15502E78">
+      <End Role="pm_User" EntitySet="pm_User" />
+      <End Role="pm_project" EntitySet="pm_project" />
+    </AssociationSet>
+    <AssociationSet Name="FK__pm_projec__proje__1A14E395" Association="Self.FK__pm_projec__proje__1A14E395">
+      <End Role="pm_project" EntitySet="pm_project" />
+      <End Role="pm_projectTeam" EntitySet="pm_projectTeam" />
+    </AssociationSet>
+    <AssociationSet Name="FK__pm_projec__proje__20C1E124" Association="Self.FK__pm_projec__proje__20C1E124">
+      <End Role="pm_project" EntitySet="pm_project" />
+      <End Role="pm_projectComments" EntitySet="pm_projectComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__pm_User__role_id__1273C1CD" Association="Self.FK__pm_User__role_id__1273C1CD">
+      <End Role="pm_Role" EntitySet="pm_Role" />
+      <End Role="pm_User" EntitySet="pm_User" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
