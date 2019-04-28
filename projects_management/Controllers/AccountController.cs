@@ -9,6 +9,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using projects_management.Models;
+using System.Data.SqlClient;
+using System.Data.Entity.Core.EntityClient;
 
 namespace projects_management_system.Controllers
 {
@@ -18,6 +20,7 @@ namespace projects_management_system.Controllers
         // GET: AccountUser
 
         //Return Registration View Page.
+        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
@@ -71,7 +74,8 @@ namespace projects_management_system.Controllers
         {
             using (projects_management_systemEntities db = new projects_management_systemEntities())
             {
-                var usr = db.pm_User.Where(u => u.email == user.email && u.password == user.password).FirstOrDefault();
+                var usr = db.pm_User.Where(u => u.email == user.email).Where(u => u.password == user.password).FirstOrDefault();
+
                 if (usr != null)
                 {
                      Session["user_id"] = usr.id.ToString();
