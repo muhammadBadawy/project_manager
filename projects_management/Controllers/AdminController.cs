@@ -12,7 +12,7 @@ namespace projects_management.Controllers
     {
         // GET: Admin
 
-        projects_management_systemEntities db = new projects_management_systemEntities();
+        DBEntities db = new DBEntities();
 
         public ActionResult Index()
         {
