@@ -122,10 +122,14 @@ namespace projects_management_system.Controllers
                 return RedirectToAction("Login");
         }
 
-
+        [AllowAnonymous]
         public ActionResult Logout()
         {
+            Session["user_id"] = null;
+            Session["user_email"] = null;
+            Session["user_role_id"] = null;
             Session.Clear();
+            Session.Abandon();
             return RedirectToAction("Login", "Account");
         }
        

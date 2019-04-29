@@ -1,6 +1,11 @@
 ﻿<!DOCTYPE html>
     <html>
     <head>
+        @if (string.IsNullOrEmpty(Session["user_id"] as string))
+         {
+                Response.Redirect("~/Account/Login");
+         }
+         @Session["user_id"]
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Admin Panel</title>
@@ -19,8 +24,16 @@
         <!-- Google Font -->
         <link rel="stylesheet"
               href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+        <script src="https://cdn.anychart.com/js/8.0.1/anychart-core.min.js"></script>
+        <script src="https://cdn.anychart.com/js/8.0.1/anychart-pie.min.js"></script>
+        <script src="https://cdn.anychart.com/js/8.0.1/anychart-cartesian.min.js"></script>
+
+        
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+        
     </head>
-    <body class="hold-transition skin-blue sidebar-mini">
+    <body class="hold-transition skin-blue sidebar-mini" style="padding-top: 0;padding-bottom: 0;">
         <div class="wrapper">
             <!-- Main Header -->
             <header class="main-header">
@@ -118,7 +131,9 @@
             <!-- Content Wrapper. Contains page content -->
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
-                @RenderBody()
+                <div style="padding: 50px;">
+                    @RenderBody()
+                </div>
                 <!-- /.content -->
             </div>
             <!-- /.content-wrapper -->
@@ -131,10 +146,16 @@
         <!-- ./wrapper -->
         <!-- REQUIRED JS SCRIPTS -->
         <!-- jQuery 3 -->
-        <script src="~/bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.4.0.min.js"></script>
         <!-- Bootstrap 3.3.7 -->
         <script src="~/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
         <!-- AdminLTE App -->
         <script src="~/dist/js/adminlte.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#mytable').DataTable();
+            });
+        </script>
     </body>
 </html>
