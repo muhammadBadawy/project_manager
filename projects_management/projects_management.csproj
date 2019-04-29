@@ -296,6 +296,12 @@
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Details.cshtml" />
     <Content Include="Views\Project\Delete.cshtml" />
+    <Content Include="Views\Account\profile.cshtml" />
+    <Content Include="Views\Project\Notdelivered.cshtml" />
+    <Content Include="Views\Project\Delivered.cshtml" />
+    <Content Include="Views\Project\Requests.cshtml" />
+    <Content Include="Views\Project\History.cshtml" />
+    <Content Include="Views\Project\Current.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

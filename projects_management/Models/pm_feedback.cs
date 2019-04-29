@@ -19,5 +19,8 @@ namespace projects_management.Models
         public Nullable<int> evaluated_id { get; set; }
         public Nullable<int> rating { get; set; }
         public string reason { get; set; }
+    
+        public virtual pm_User pm_User { get; set; }
+        public virtual pm_User pm_User1 { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace projects_management_system.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        DBEntities db = new DBEntities();
         // GET: AccountUser
 
         //Return Registration View Page.
@@ -33,8 +34,6 @@ namespace projects_management_system.Controllers
         {
             if (ModelState.IsValid)
             {
-                DBEntities db = new DBEntities();
-
                 var checkUsername = db.pm_User.Where(e => e.email == account.email).FirstOrDefault();
                 var checkEmail = db.pm_User.Where(e => e.email == account.email).FirstOrDefault();
                 if (checkUsername == null)
@@ -72,43 +71,51 @@ namespace projects_management_system.Controllers
         [AllowAnonymous]
         public ActionResult Login(pm_User user)
         {
-            using (DBEntities db = new DBEntities())
+            
+            var usr = db.pm_User.Where(u => u.email == user.email).Where(u => u.password == user.password).FirstOrDefault();
+
+            if (usr != null)
             {
-                var usr = db.pm_User.Where(u => u.email == user.email).Where(u => u.password == user.password).FirstOrDefault();
+                Session["user_id"] = usr.id.ToString();
+                Session["user_email"] = usr.email.ToString();
+                Session["user_role_id"] = usr.role_id.ToString();
 
-                if (usr != null)
-                {
-                    Session["user_id"] = usr.id.ToString();
-                    Session["user_email"] = usr.email.ToString();
-                    Session["user_role_id"] = usr.role_id.ToString();
-
-                    //get user role to switch the views of the actors
-                    int user_role = usr.role_id.Value;
-                    switch(user_role){
-                        case 1:
-                            {
-                             //case 1 goto admin dashboard
-                            return RedirectToAction("LoggedIn");
-                            }
-                            case 5:
-                            {
-                                //case 2 goto project customer dashboard
-                               return RedirectToAction("LoggedIn");
-                            }     
-                    } 
-                }
-                else {
-                    ModelState.AddModelError("", "Invalid Username or password");
-                }
+                //get user role to switch the views of the actors
+                int user_role = usr.role_id.Value;
+                switch(user_role){
+                    case 1:
+                    {
+                        //case 1 goto admin dashboard
+                    return RedirectToAction("profile");
+                    }
+                    case 2:
+                    {
+                        //case 2 goto project customer dashboard
+                        return RedirectToAction("profile");
+                    }     
+                    case 5:
+                    {
+                        //case 2 goto project customer dashboard
+                        return RedirectToAction("profile");
+                    }     
+                } 
             }
+            else {
+                ModelState.AddModelError("", "Invalid Username or password");
+            }
+            
             return View();
         }
 
         [AllowAnonymous]
-        public ActionResult LoggedIn()
+        public ActionResult profile()
         {
             if (Session["user_id"] != null)
-                return View();
+            {
+                int user_id = int.Parse(Session["user_id"].ToString());
+                pm_User user = db.pm_User.Find(user_id);
+                return View(user);
+            }
             else
                 return RedirectToAction("Login");
         }

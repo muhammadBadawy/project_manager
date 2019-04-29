@@ -16,8 +16,10 @@ namespace projects_management.Models
     {
         public int id { get; set; }
         public Nullable<int> project_id { get; set; }
+        public Nullable<int> member_id { get; set; }
         public string comment { get; set; }
     
         public virtual pm_project pm_project { get; set; }
+        public virtual pm_User pm_User { get; set; }
     }
 }

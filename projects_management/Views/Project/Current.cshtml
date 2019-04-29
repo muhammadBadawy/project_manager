@@ -1,13 +1,5 @@
 ﻿@model IEnumerable<projects_management.Models.pm_project>
 
-@{
-    ViewBag.Title = "Index";
-}
-
-<h2>Index</h2>
-
-@ViewBag.Msg
-
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
@@ -36,6 +28,9 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.pm_User.firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pm_User1.firstname)
         </th>
         <th></th>
     </tr>
@@ -66,24 +61,14 @@
         <td>
             @Html.DisplayFor(modelItem => item.pm_User.firstname)
         </td>
-        @if (int.Parse(Session["user_role_id"].ToString()) == 5)
-        {
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Show Requests", "Requests", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
-            </td>
-
-        }
-        else if (int.Parse(Session["user_role_id"].ToString()) == 2)
-        {
-            <td>
-                @Html.ActionLink("Apply", "Apply", new { id = item.id })
-  
-            </td>
-        }
-
+        <td>
+            @Html.DisplayFor(modelItem => item.pm_User1.firstname)
+        </td>
+        <td>
+            @Html.ActionLink("Make Team", "Edit", new { id = item.id }) |
+            @Html.ActionLink("Leave Project", "Leave", new { id = item.id })
+          
+        </td>
     </tr>
 }
 
