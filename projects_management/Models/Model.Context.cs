@@ -13,10 +13,10 @@ namespace projects_management.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class projects_management_systemEntities : DbContext
+    public partial class DBEntities : DbContext
     {
-        public projects_management_systemEntities()
-            : base("name=projects_management_systemEntities")
+        public DBEntities()
+            : base("name=DBEntities")
         {
         }
     

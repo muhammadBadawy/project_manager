@@ -26,12 +26,14 @@ namespace projects_management.Models
         public string p_description { get; set; }
         public Nullable<int> admin_approved { get; set; }
         public Nullable<int> project_manger_id { get; set; }
+        public Nullable<int> customer_id { get; set; }
         public Nullable<int> p_state { get; set; }
         public Nullable<int> price { get; set; }
         public Nullable<System.DateTime> start_date { get; set; }
         public Nullable<System.DateTime> end_date { get; set; }
     
         public virtual pm_User pm_User { get; set; }
+        public virtual pm_User pm_User1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<pm_projectTeam> pm_projectTeam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
