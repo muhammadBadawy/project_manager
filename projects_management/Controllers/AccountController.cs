@@ -33,7 +33,7 @@ namespace projects_management_system.Controllers
         {
             if (ModelState.IsValid)
             {
-                projects_management_systemEntities db = new projects_management_systemEntities();
+                DBEntities db = new DBEntities();
 
                 var checkUsername = db.pm_User.Where(e => e.email == account.email).FirstOrDefault();
                 var checkEmail = db.pm_User.Where(e => e.email == account.email).FirstOrDefault();
@@ -72,14 +72,16 @@ namespace projects_management_system.Controllers
         [AllowAnonymous]
         public ActionResult Login(pm_User user)
         {
-            using (projects_management_systemEntities db = new projects_management_systemEntities())
+            using (DBEntities db = new DBEntities())
             {
                 var usr = db.pm_User.Where(u => u.email == user.email).Where(u => u.password == user.password).FirstOrDefault();
 
                 if (usr != null)
                 {
-                     Session["user_id"] = usr.id.ToString();
+                    Session["user_id"] = usr.id.ToString();
                     Session["user_email"] = usr.email.ToString();
+                    Session["user_role_id"] = usr.role_id.ToString();
+
                     //get user role to switch the views of the actors
                     int user_role = usr.role_id.Value;
                     switch(user_role){
@@ -88,10 +90,10 @@ namespace projects_management_system.Controllers
                              //case 1 goto admin dashboard
                             return RedirectToAction("LoggedIn");
                             }
-                            case 2:
+                            case 5:
                             {
-                                //case 2 goto project manager dashboard
-                                return RedirectToAction("project_manager_content");
+                                //case 2 goto project customer dashboard
+                               return RedirectToAction("LoggedIn");
                             }     
                     } 
                 }
@@ -126,8 +128,6 @@ namespace projects_management_system.Controllers
             Session.Clear();
             return RedirectToAction("Login", "Account");
         }
-        
-
        
     }
 }

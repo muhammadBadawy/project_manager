@@ -19,6 +19,7 @@ namespace projects_management.Models
         {
             this.pm_personSkill = new HashSet<pm_personSkill>();
             this.pm_project = new HashSet<pm_project>();
+            this.pm_project1 = new HashSet<pm_project>();
         }
     
         public int id { get; set; }
@@ -35,6 +36,8 @@ namespace projects_management.Models
         public virtual ICollection<pm_personSkill> pm_personSkill { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<pm_project> pm_project { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<pm_project> pm_project1 { get; set; }
         public virtual pm_Role pm_Role { get; set; }
     }
 }
