@@ -17,9 +17,13 @@ namespace projects_management.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public pm_User()
         {
+            this.pm_feedback = new HashSet<pm_feedback>();
+            this.pm_feedback1 = new HashSet<pm_feedback>();
             this.pm_personSkill = new HashSet<pm_personSkill>();
             this.pm_project = new HashSet<pm_project>();
             this.pm_project1 = new HashSet<pm_project>();
+            this.pm_projectComments = new HashSet<pm_projectComments>();
+            this.pm_projectTeam = new HashSet<pm_projectTeam>();
         }
     
         public int id { get; set; }
@@ -33,11 +37,19 @@ namespace projects_management.Models
         public Nullable<int> role_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<pm_feedback> pm_feedback { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<pm_feedback> pm_feedback1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<pm_personSkill> pm_personSkill { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<pm_project> pm_project { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<pm_project> pm_project1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<pm_projectComments> pm_projectComments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<pm_projectTeam> pm_projectTeam { get; set; }
         public virtual pm_Role pm_Role { get; set; }
     }
 }

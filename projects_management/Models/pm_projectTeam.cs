@@ -21,5 +21,7 @@ namespace projects_management.Models
         public Nullable<int> state { get; set; }
     
         public virtual pm_project pm_project { get; set; }
+        public virtual pm_User pm_User { get; set; }
+        public virtual pm_Role pm_Role { get; set; }
     }
 }

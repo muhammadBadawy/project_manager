@@ -43,6 +43,7 @@
         <MappingFragment StoreEntitySet="pm_projectComments">
           <ScalarProperty Name="id" ColumnName="id" />
           <ScalarProperty Name="project_id" ColumnName="project_id" />
+          <ScalarProperty Name="member_id" ColumnName="member_id" />
           <ScalarProperty Name="comment" ColumnName="comment" />
         </MappingFragment>
       </EntityTypeMapping>

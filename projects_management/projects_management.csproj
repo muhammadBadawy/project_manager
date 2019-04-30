@@ -298,15 +298,21 @@
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Details.cshtml" />
     <Content Include="Views\Project\Delete.cshtml" />
+    <Content Include="Views\Account\profile.cshtml" />
+    <Content Include="Views\Project\Notdelivered.cshtml" />
+    <Content Include="Views\Project\Delivered.cshtml" />
+    <Content Include="Views\Project\Requests.cshtml" />
+    <Content Include="Views\Project\History.cshtml" />
+    <Content Include="Views\Project\Current.cshtml" />
     <Content Include="Views\Admin\AddUser.cshtml" />
     <Content Include="Views\Admin\EditUser.cshtml" />
     <Content Include="Views\Admin\AllUsers.cshtml" />
     <Content Include="Views\Admin\UserDetails.cshtml" />
     <Content Include="Views\Shared\_MainMenu.cshtml" />
+    <Content Include="Views\Invitation\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Invitation\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

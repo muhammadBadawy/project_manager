@@ -6,74 +6,113 @@
 
 <h2>Index</h2>
 
+@ViewBag.Msg
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table" id="mytable">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.title)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.p_description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.admin_approved)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.p_state)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.start_date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.end_date)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.pm_User.firstname)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.p_description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.admin_approved)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.p_state)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.start_date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.end_date)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.pm_User.firstname)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 
+@{
+    int user_role = int.Parse(Session["user_role_id"].ToString());
+}
+
+<table class="table"  id="mytable">
+  <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.p_description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.admin_approved)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.p_state)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.start_date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.end_date)
+        </th>
+        <th>
+            Owner
+        </th>
+        @if (user_role == 5 || user_role == 1 || user_role == 2)
+        {
+        <th>Operation</th>
+        }
+    </tr>
+  </thead>
+  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.p_description)
+        </td>
+        <td>
+            @if (item.admin_approved == 0 )
+            {
+                <p>Not Approved</p>
+            }
+            else
+            {
+                <p>Approved</p>
+            }
+        </td>
+        <td>
+            @if (item.p_state == 1)
+            {
+                <p>On progress</p>
+            }
+            else
+            {
+                <p>Delivered</p>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.start_date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.end_date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pm_User.firstname)
+        </td>
+        @if (user_role == 5 || user_role == 1)
+        {
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Show Requests", "Requests", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                @if(user_role == 1 && item.admin_approved != 1)
+                {
+                    @Html.ActionLink("AdminApprove", "AdminApprove", new { id = item.id })
+                }
+            </td>
+
+        }
+        else if (user_role == 2)
+        {
+            <td>
+                @Html.ActionLink("Apply", "Apply", new { id = item.id })
+
+            </td>
+        }
+
+    </tr>
+}
+  </tbody>
+</table>

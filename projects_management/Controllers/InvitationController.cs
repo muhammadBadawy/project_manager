@@ -11,83 +11,75 @@ namespace projects_management.Controllers
     {
         DBEntities db = new DBEntities();
         // GET: Invitation
-        public ActionResult Index(int id)
+        public ActionResult Index()
         {
-            
+            int id = int.Parse(Session["user_id"].ToString());
+            int user_role_id = int.Parse(Session["user_role_id"].ToString());
+
+            if (user_role_id == 5)
+            {
+                Response.Redirect(Request.UrlReferrer.ToString());
+            }
             var invitations = db.pm_projectTeam.Where(e => e.member_id == id).Where(e => e.state == 0).ToList();
-            return View();
-
-        }
-
-        // GET: Invitation/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Invitation/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Invitation/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Invitation/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
+            return View(invitations);
         }
 
         // POST: Invitation/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [HttpGet]
+        public ActionResult Approve(int id)
         {
             try
             {
-                // TODO: Add update logic here
 
+                var invitation = db.pm_projectTeam.Single(a => a.id == id);
+
+                invitation.state = 1;
+
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                ViewBag.Msg = "Coudn't approve!";
+                return View("Index");
             }
-        }
-
-        // GET: Invitation/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
         }
 
         // POST: Invitation/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpGet]
+        public ActionResult Delete(int id)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                pm_projectTeam invitation = db.pm_projectTeam.Find(id);
+                db.pm_projectTeam.Remove(invitation);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
             {
-                return View();
+                ViewBag.Msg = "Error while deleting!";
+                return RedirectToAction("Index");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Invite(int id)
+        {
+            try
+            {
+
+                var invitation = db.pm_projectTeam.Single(a => a.id == id);
+
+                invitation.state = 1;
+
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                ViewBag.Msg = "Coudn't approve!";
+                return View("Index");
             }
         }
     }

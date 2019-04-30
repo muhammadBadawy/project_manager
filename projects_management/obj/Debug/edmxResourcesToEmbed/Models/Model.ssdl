@@ -40,6 +40,7 @@
     </Key>
     <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="project_id" Type="int" />
+    <Property Name="member_id" Type="int" />
     <Property Name="comment" Type="varchar" MaxLength="255" />
   </EntityType>
   <EntityType Name="pm_projectTeam">
@@ -73,7 +74,31 @@
     <Property Name="description" Type="text" />
     <Property Name="role_id" Type="int" />
   </EntityType>
-  <Association Name="FK__pm_person__proje__1ED998B2">
+  <Association Name="FK__pm_feedba__evalu__1920BF5C">
+    <End Role="pm_User" Type="Self.pm_User" Multiplicity="0..1" />
+    <End Role="pm_feedback" Type="Self.pm_feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pm_User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="pm_feedback">
+        <PropertyRef Name="evaluator_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__pm_feedba__evalu__1A14E395">
+    <End Role="pm_User" Type="Self.pm_User" Multiplicity="0..1" />
+    <End Role="pm_feedback" Type="Self.pm_feedback" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pm_User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="pm_feedback">
+        <PropertyRef Name="evaluated_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__pm_person__proje__22AA2996">
     <End Role="pm_User" Type="Self.pm_User" Multiplicity="0..1" />
     <End Role="pm_personSkill" Type="Self.pm_personSkill" Multiplicity="*" />
     <ReferentialConstraint>
@@ -97,6 +122,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK__pm_projec__membe__1DE57479">
+    <End Role="pm_User" Type="Self.pm_User" Multiplicity="0..1" />
+    <End Role="pm_projectTeam" Type="Self.pm_projectTeam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pm_User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="pm_projectTeam">
+        <PropertyRef Name="member_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__pm_projec__membe__267ABA7A">
+    <End Role="pm_User" Type="Self.pm_User" Multiplicity="0..1" />
+    <End Role="pm_projectComments" Type="Self.pm_projectComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pm_User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="pm_projectComments">
+        <PropertyRef Name="member_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__pm_projec__posti__1ED998B2">
+    <End Role="pm_Role" Type="Self.pm_Role" Multiplicity="0..1" />
+    <End Role="pm_projectTeam" Type="Self.pm_projectTeam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="pm_Role">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="pm_projectTeam">
+        <PropertyRef Name="postion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK__pm_projec__proje__15502E78">
     <End Role="pm_User" Type="Self.pm_User" Multiplicity="0..1" />
     <End Role="pm_project" Type="Self.pm_project" Multiplicity="*" />
@@ -109,7 +170,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__pm_projec__proje__1B0907CE">
+  <Association Name="FK__pm_projec__proje__1CF15040">
     <End Role="pm_project" Type="Self.pm_project" Multiplicity="0..1" />
     <End Role="pm_projectTeam" Type="Self.pm_projectTeam" Multiplicity="*" />
     <ReferentialConstraint>
@@ -121,7 +182,7 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK__pm_projec__proje__21B6055D">
+  <Association Name="FK__pm_projec__proje__25869641">
     <End Role="pm_project" Type="Self.pm_project" Multiplicity="0..1" />
     <End Role="pm_projectComments" Type="Self.pm_projectComments" Multiplicity="*" />
     <ReferentialConstraint>
@@ -153,7 +214,15 @@
     <EntitySet Name="pm_projectTeam" EntityType="Self.pm_projectTeam" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="pm_Role" EntityType="Self.pm_Role" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="pm_User" EntityType="Self.pm_User" Schema="dbo" store:Type="Tables" />
-    <AssociationSet Name="FK__pm_person__proje__1ED998B2" Association="Self.FK__pm_person__proje__1ED998B2">
+    <AssociationSet Name="FK__pm_feedba__evalu__1920BF5C" Association="Self.FK__pm_feedba__evalu__1920BF5C">
+      <End Role="pm_User" EntitySet="pm_User" />
+      <End Role="pm_feedback" EntitySet="pm_feedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK__pm_feedba__evalu__1A14E395" Association="Self.FK__pm_feedba__evalu__1A14E395">
+      <End Role="pm_User" EntitySet="pm_User" />
+      <End Role="pm_feedback" EntitySet="pm_feedback" />
+    </AssociationSet>
+    <AssociationSet Name="FK__pm_person__proje__22AA2996" Association="Self.FK__pm_person__proje__22AA2996">
       <End Role="pm_User" EntitySet="pm_User" />
       <End Role="pm_personSkill" EntitySet="pm_personSkill" />
     </AssociationSet>
@@ -161,15 +230,27 @@
       <End Role="pm_User" EntitySet="pm_User" />
       <End Role="pm_project" EntitySet="pm_project" />
     </AssociationSet>
+    <AssociationSet Name="FK__pm_projec__membe__1DE57479" Association="Self.FK__pm_projec__membe__1DE57479">
+      <End Role="pm_User" EntitySet="pm_User" />
+      <End Role="pm_projectTeam" EntitySet="pm_projectTeam" />
+    </AssociationSet>
+    <AssociationSet Name="FK__pm_projec__membe__267ABA7A" Association="Self.FK__pm_projec__membe__267ABA7A">
+      <End Role="pm_User" EntitySet="pm_User" />
+      <End Role="pm_projectComments" EntitySet="pm_projectComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK__pm_projec__posti__1ED998B2" Association="Self.FK__pm_projec__posti__1ED998B2">
+      <End Role="pm_Role" EntitySet="pm_Role" />
+      <End Role="pm_projectTeam" EntitySet="pm_projectTeam" />
+    </AssociationSet>
     <AssociationSet Name="FK__pm_projec__proje__15502E78" Association="Self.FK__pm_projec__proje__15502E78">
       <End Role="pm_User" EntitySet="pm_User" />
       <End Role="pm_project" EntitySet="pm_project" />
     </AssociationSet>
-    <AssociationSet Name="FK__pm_projec__proje__1B0907CE" Association="Self.FK__pm_projec__proje__1B0907CE">
+    <AssociationSet Name="FK__pm_projec__proje__1CF15040" Association="Self.FK__pm_projec__proje__1CF15040">
       <End Role="pm_project" EntitySet="pm_project" />
       <End Role="pm_projectTeam" EntitySet="pm_projectTeam" />
     </AssociationSet>
-    <AssociationSet Name="FK__pm_projec__proje__21B6055D" Association="Self.FK__pm_projec__proje__21B6055D">
+    <AssociationSet Name="FK__pm_projec__proje__25869641" Association="Self.FK__pm_projec__proje__25869641">
       <End Role="pm_project" EntitySet="pm_project" />
       <End Role="pm_projectComments" EntitySet="pm_projectComments" />
     </AssociationSet>

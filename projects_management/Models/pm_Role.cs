@@ -17,12 +17,15 @@ namespace projects_management.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public pm_Role()
         {
+            this.pm_projectTeam = new HashSet<pm_projectTeam>();
             this.pm_User = new HashSet<pm_User>();
         }
     
         public int id { get; set; }
         public string role_title { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<pm_projectTeam> pm_projectTeam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<pm_User> pm_User { get; set; }
     }

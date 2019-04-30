@@ -1,0 +1,51 @@
+﻿@model IEnumerable<projects_management.Models.pm_projectTeam>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.state)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pm_project.title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pm_User.firstname)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pm_Role.role_title)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.state)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pm_project.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pm_User.firstname)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pm_Role.role_title)
+        </td>
+        <td>
+            @Html.ActionLink("Approve", "Approve", new { id=item.id }) |
+            @Html.ActionLink("Reject", "Delete", new { id=item.id })
+        </td>
+    </tr>
+}
+
+</table>
