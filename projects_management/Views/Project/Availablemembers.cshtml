@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<projects_management.Models.pm_User>
 
 <p>
-    
+
 </p>
 <table class="table"  id="mytable">
   <thead>
@@ -62,8 +62,8 @@
             @Html.DisplayFor(modelItem => item.pm_Role.role_title)
         </td>
         <td>
-            @Html.ActionLink("Ask to join", "asktojoin", new { id=item.id }) 
-           
+            @Html.ActionLink("Ask to join", "asktojoin", new { id=item.id })
+
         </td>
     </tr>
 }

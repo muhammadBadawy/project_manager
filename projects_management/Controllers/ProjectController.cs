@@ -22,7 +22,7 @@ namespace projects_management_system.Controllers
             }
             else if (user_role_id == 5)//if customer get customer projects
             {
-                
+
 
                 return View(db.pm_project.Where(p => p.admin_approved == 1 && p.customer_id == user_id));
             }
@@ -127,9 +127,9 @@ namespace projects_management_system.Controllers
 
                     project.title = editedProject.title;
                     project.p_description = editedProject.p_description;
-                    project.price = editedProject.price;
-                    project.start_date = editedProject.start_date;
-                    project.end_date = editedProject.end_date;
+                    //project.price = editedProject.price;
+                    //project.start_date = editedProject.start_date;
+                    //project.end_date = editedProject.end_date;
 
                     db.SaveChanges();
                 }
@@ -205,7 +205,7 @@ namespace projects_management_system.Controllers
             var requests = db.pm_projectTeam.Where(t => t.id != id);
             //remove other requests
             db.pm_projectTeam.RemoveRange(requests);
-            //get project to change project manager id 
+            //get project to change project manager id
             var approved_project = db.pm_project.Find(project_id);
             //update project manger id in project table
             approved_project.project_manger_id = project_manager_id;
@@ -225,6 +225,17 @@ namespace projects_management_system.Controllers
             int user_id = int.Parse(Session["user_id"].ToString());
             return View(db.pm_project.Where(p => p.admin_approved == 1 && p.project_manger_id == user_id && p.p_state == 1));
         }
+
+        // GET: Project/Availablemembers/
+        public ActionResult Availablemembers(int id)
+        {
+            //get users what not joined in this project that are team leaders and developers
+            return View(db.pm_User.Where(u => u.pm_projectTeam.Any(t => t.project_id != id) && (u.role_id == 3 || u.role_id == 4)));
+            //return Content(id.ToString());
+        }
+
+
+
         // GET: Project/History
         public ActionResult History()
         {
@@ -257,29 +268,139 @@ namespace projects_management_system.Controllers
         public ActionResult Apply(int id)
         {
             int project_manager_id = int.Parse(Session["user_id"].ToString());
-            var req_found = db.pm_projectTeam.Where(team => team.project_id == id && team.member_id == project_manager_id);
-       
-            
-            if (req_found == null)
+            var req_found = db.pm_projectTeam.Where(team => team.project_id == id && team.member_id == project_manager_id).FirstOrDefault();
+
+            //return Content(req_found.ToString());
+            /*ViewBag.Msg = "5ra";
+            ViewBag.req_found = req_found;
+             return RedirectToAction("Index");
+            */
+            if (req_found != null)
             {
                 ViewBag.Msg = "You have sent request to joing this project, your request is still pending!";
-                 return RedirectToAction("Index");
+                //return Content(ViewBag);
+
+                return RedirectToAction("Index", ViewBag);
+                // return HttpNotFound();
             }
             else
             {
-            pm_projectTeam req = new pm_projectTeam();
-            req.member_id = project_manager_id;
-            req.project_id = id;
-            req.postion = 2;
-            req.state = 0;
+                pm_projectTeam req = new pm_projectTeam();
+                req.member_id = project_manager_id;
+                req.project_id = id;
+                req.postion = 2;
+                req.state = 0;
 
-            db.pm_projectTeam.Add(req);
-            db.SaveChanges();
-            ViewBag.Msg = "Request Sent successfully !";
-            return RedirectToAction("Index");
+                db.pm_projectTeam.Add(req);
+                db.SaveChanges();
+                ViewBag.Msg = "Request Sent successfully !";
+
+                return RedirectToAction("Index", ViewBag);
             }
 
-            
+
+        }
+
+        // GET: Project/History
+        public ActionResult Manage(int id)
+        {
+            var project = db.pm_project.Find(id);
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+            return View(project);
+        }
+
+        [HttpPost]
+        public ActionResult Manage(pm_project editedProject)
+        {
+            try
+            {
+                // TODO: Add update logic here
+                if (editedProject != null)
+                {
+                    var project = db.pm_project.Find(editedProject.id);
+
+                    project.start_date = editedProject.start_date;
+                    project.end_date = editedProject.end_date;
+                    project.price = editedProject.price;
+                    ViewBag.Msg = "Schedule successfully added ";
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("Current");
+            }
+            catch
+            {
+                ViewBag.Msg = "Error! ";
+                return RedirectToAction("Current");
+            }
+        }
+
+
+
+        // GET: Project/History
+        public ActionResult Comment(int id)
+        {
+            var project = db.pm_project.Find(id);
+            if (project == null)
+            {
+                return HttpNotFound();
+            }
+            var projectcomments = db.pm_projectComments.Where(c=> c.project_id == id);
+            ViewBag.proj_id = id;
+            return View(projectcomments);
+        }
+
+
+        public ActionResult Commenty()
+        {
+
+            return View();
+        }
+
+
+
+        // POST: Project/Create
+        [HttpPost]
+        public ActionResult Comment(int id, pm_projectComments projectcomment)
+        {
+            try
+            {
+                // TODO: Add insert logic here
+                //save the id of the user to table
+                projectcomment.member_id = int.Parse(Session["user_id"].ToString());
+                projectcomment.project_id = id;
+                projectcomment.comment = projectcomment.comment;
+
+                db.pm_projectComments.Add(projectcomment);
+                db.SaveChanges();
+                ModelState.Clear();
+                ViewBag.Msg = "Comment Added successfully!";
+                return RedirectToAction("Comment");
+            }
+            catch
+            {
+                ViewBag.Msg = "Can't add project";
+                return RedirectToAction("Comment");
+            }
+        }
+
+
+        // GET: Project/Approve/5
+        public ActionResult Deliver(int id)
+        {
+            pm_project project  = db.pm_project.Find(id);
+             if (project == null)
+            {
+                return HttpNotFound();
+            }
+            //update state
+            project.p_state = 0;
+            db.SaveChanges();
+
+            return RedirectToAction("Current");
         }
 
         [HttpGet]
@@ -287,7 +408,7 @@ namespace projects_management_system.Controllers
         {
             try
             {
-                
+
                 var project = db.pm_project.Find(id);
 
                 project.admin_approved = 1;
