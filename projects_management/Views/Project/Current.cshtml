@@ -1,9 +1,11 @@
 ﻿@model IEnumerable<projects_management.Models.pm_project>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    
 </p>
-<table class="table">
+@ViewBag.Msg
+<table class="table"  id="mytable">
+  <thead>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.title)
@@ -32,9 +34,13 @@
         <th>
             @Html.DisplayNameFor(model => model.pm_User1.firstname)
         </th>
-        <th></th>
+        <th>
+            Operations
+        </th>
     </tr>
 
+</thead>
+<tbody>
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -65,11 +71,14 @@
             @Html.DisplayFor(modelItem => item.pm_User1.firstname)
         </td>
         <td>
-            @Html.ActionLink("Make Team", "Edit", new { id = item.id }) |
-            @Html.ActionLink("Leave Project", "Leave", new { id = item.id })
-          
+            @Html.ActionLink("Make Team", "Availablemembers", new { id = item.id }) |
+            @Html.ActionLink("Leave Project", "Leave", new { id = item.id }) |
+            @Html.ActionLink("Deliver Project", "Deliver", new { id = item.id }) |
+            @Html.ActionLink("Manage", "Manage", new { id = item.id }) |
+            @Html.ActionLink("Comment", "Comment", new { id = item.id })
         </td>
     </tr>
 }
 
+</tbody>
 </table>

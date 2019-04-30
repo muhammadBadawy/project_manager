@@ -171,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\FeedbackController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InvitationController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -310,6 +311,16 @@
     <Content Include="Views\Admin\UserDetails.cshtml" />
     <Content Include="Views\Shared\_MainMenu.cshtml" />
     <Content Include="Views\Invitation\Index.cshtml" />
+    <Content Include="Views\Project\Availablemembers.cshtml" />
+    <Content Include="Views\Project\Manage.cshtml" />
+    <Content Include="Views\Project\Comment.cshtml" />
+    <Content Include="Views\Project\Commenty.cshtml" />
+    <Content Include="Views\Invitation\InviteMembers.cshtml" />
+    <Content Include="Views\Invitation\MyProjects.cshtml" />
+    <Content Include="Views\Invitation\ProjectDevelopers.cshtml" />
+    <Content Include="Views\Feedback\Create.cshtml" />
+    <Content Include="Views\Feedback\Index.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

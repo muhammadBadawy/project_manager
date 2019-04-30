@@ -27,6 +27,11 @@ namespace projects_management_system.Controllers
             return View();
         }
 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         //Registration method to check and send data to DB
         [HttpPost]
         public ActionResult Register(pm_User account)
@@ -92,7 +97,17 @@ namespace projects_management_system.Controllers
                     {
                         //case 2 goto project customer dashboard
                         return RedirectToAction("profile");
-                    }     
+                    }
+                    case 3:
+                    {
+                            //case 2 goto project customer dashboard
+                            return RedirectToAction("profile");
+                    }
+                    case 4:
+                    {
+                            //case 2 goto project customer dashboard
+                            return RedirectToAction("profile");
+                    }
                     case 5:
                     {
                         //case 2 goto project customer dashboard

@@ -6,12 +6,6 @@
 
 <h2>Index</h2>
 
-@ViewBag.Msg
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-
 @{
     int user_role = int.Parse(Session["user_role_id"].ToString());
 }
@@ -43,10 +37,10 @@
         <th>
             Owner
         </th>
-        @if (user_role == 5 || user_role == 1 || user_role == 2)
-        {
-        <th>Operation</th>
-        }
+        <th>
+            Operation
+        </th>
+
     </tr>
   </thead>
   <tbody>
@@ -109,6 +103,16 @@
             <td>
                 @Html.ActionLink("Apply", "Apply", new { id = item.id })
 
+            </td>
+        }
+        else if (user_role == 3 || user_role == 4)
+        {
+            <td>
+                @if (user_role == 3)
+                {
+                    <a href="Invitation/InviteMembers/@item.id">Invite Members</a><p>|</p>
+                }
+                <a href="Invitation/ProjectDevelopers/@item.id">Project Developers</a>
             </td>
         }
 

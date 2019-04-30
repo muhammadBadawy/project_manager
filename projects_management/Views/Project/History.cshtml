@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<projects_management.Models.pm_project>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    
 </p>
-<table class="table">
+<table class="table"  id="mytable">
+  <thead>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.title)
@@ -32,9 +33,10 @@
         <th>
             @Html.DisplayNameFor(model => model.pm_User1.firstname)
         </th>
-        <th></th>
     </tr>
 
+</thead>
+<tbody>
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -68,4 +70,5 @@
     </tr>
 }
 
+</tbody>
 </table>

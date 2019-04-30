@@ -1,18 +1,74 @@
 ﻿<ul class="sidebar-menu" data-widget="tree">
+    @{
+        int user_role_id = int.Parse(Session["user_role_id"].ToString());
+    }
     <li class="header">HEADER</li>
     <!-- Optionally, you can add icons to the links -->
-    <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-    <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
+    <li class="active"><a href="/Project"><i class="fa fa-link"></i> <span>Projects</span></a></li>
+    @if (user_role_id == 5 || user_role_id == 1)
+    {
+        <li class="active"><a href="/Project/Create"><i class="fa fa-link"></i> <span>Create Project</span></a></li>
+    }
     <li class="treeview">
         <a href="#">
-            <i class="fa fa-link"></i> <span>Multilevel</span>
+            <i class="fa fa-link"></i> <span>Users</span>
             <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
             </span>
         </a>
         <ul class="treeview-menu">
-            <li><a href="#">Link in level 2</a></li>
-            <li><a href="#">Link in level 2</a></li>
+            <li><a href="/Admin/AllUsers">All users</a></li>
+            <li><a href="/Admin/AddUSer">Add user</a></li>
         </ul>
     </li>
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-link"></i> <span>My Settings</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            @if (user_role_id == 2)
+            {
+                <li><a href="/Projects/Requests">My Invitations</a></li>
+            }
+            else
+            {
+                <li><a href="/Invitation">My Invitations</a></li>
+            }
+            <li><a href="/Invitation/MyProjects">My projects</a></li>
+            <li><a href="/Feedback">My Feedback</a></li>
+        </ul>
+    </li>
+    @if (user_role_id == 5)
+    {
+    <li class="treeview">
+        <a href="#">
+            <i class="fa fa-link"></i> <span>Customer Settings</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li><a href="/Project/Delivered">Finshed Projects</a></li>
+            <li><a href="/Project/Notdelivered">Pending Projects</a></li>
+        </ul>
+    </li>
+    }
+    @if (user_role_id == 2)
+    {
+        <li class="treeview">
+            <a href="#">
+                <i class="fa fa-link"></i> <span>Project Manager Settings</span>
+                <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a href="/Project/Current">Current Projects</a></li>
+                <li><a href="/Project/History">History Projects</a></li>
+            </ul>
+        </li>
+    }
 </ul>

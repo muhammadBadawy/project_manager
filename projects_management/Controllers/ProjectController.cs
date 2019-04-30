@@ -14,6 +14,7 @@ namespace projects_management_system.Controllers
         public ActionResult Index()
         {
             int user_role_id = int.Parse(Session["user_role_id"].ToString());
+            int user_id = int.Parse(Session["user_id"].ToString());
             if (user_role_id == 1) //if admin get all projects
             {
 
@@ -21,7 +22,7 @@ namespace projects_management_system.Controllers
             }
             else if (user_role_id == 5)//if customer get customer projects
             {
-                int user_id = int.Parse(Session["user_id"].ToString());
+                
 
                 return View(db.pm_project.Where(p => p.admin_approved == 1 && p.customer_id == user_id));
             }
@@ -30,10 +31,11 @@ namespace projects_management_system.Controllers
                 //Get all projects approved by admin
                 return View(db.pm_project.Where(p => p.admin_approved == 1 && p.project_manger_id == null));
             }
-            else if (user_role_id == 3 || user_role_id == 4)//if Project manager get Project manager approved projects
+            else if (user_role_id == 3 || user_role_id == 4)//if Project team leader or developer get my projects
             {
                 //Get all projects approved by admin
-                return View(db.pm_project.Where(p => p.admin_approved == 1 && p.project_manger_id == null));
+                return View(db.pm_project.Where(x => x.pm_projectTeam.Any(c => c.member_id == user_id && c.state == 1)));
+                //return View(db.pm_project.Where(p => p.admin_approved == 1 && p.project_manger_id == null));
             }
             else
             {

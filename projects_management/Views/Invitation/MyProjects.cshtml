@@ -1,14 +1,20 @@
 ﻿@model IEnumerable<projects_management.Models.pm_projectTeam>
 
-<p>
-    
-</p>
+@{
+    ViewBag.Title = "MyProjects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>MyProjects</h2>
+
 <table class="table"  id="mytable">
   <thead>
     <tr>
-       
         <th>
-            @Html.DisplayNameFor(model => model.pm_project.title)
+            @Html.DisplayNameFor(model => model.state)
+        </th>
+        <th>
+            Project Name
         </th>
         <th>
             @Html.DisplayNameFor(model => model.pm_User.firstname)
@@ -23,7 +29,16 @@
 <tbody>
 @foreach (var item in Model) {
     <tr>
-      
+        <td>
+            @if (item.state == 0)
+            {
+                <p>Pending</p>
+            }
+            else if (item.state == 1)
+            {
+                <p>Accepted</p>
+            }
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.pm_project.title)
         </td>
@@ -34,8 +49,7 @@
             @Html.DisplayFor(modelItem => item.pm_Role.role_title)
         </td>
         <td>
-            @Html.ActionLink("Approve", "Approve", new { id=item.id }) 
-    
+            @Html.ActionLink("Leave", "SoftDelete", new { id = item.id })
         </td>
     </tr>
 }

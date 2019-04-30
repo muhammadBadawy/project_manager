@@ -236,6 +236,9 @@ namespace customerApp.Controllers
         [HttpGet]
         public ActionResult DeletePost(int id)
         {
+
+
+            
             pm_project post = db.pm_project.Find(id);
 
             if (id == null)

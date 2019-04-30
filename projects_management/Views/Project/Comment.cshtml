@@ -1,0 +1,72 @@
+﻿@model IEnumerable<projects_management.Models.pm_projectComments>
+
+@{
+    ViewBag.Title = "Comment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Comment</h2>
+
+<p>
+    
+</p>
+<table class="table"  id="mytable">
+  <thead>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.comment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pm_project.title)
+        </th>
+        <th>
+           Project Manager 
+        </th>
+     
+    </tr>
+
+</thead>
+<tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.comment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pm_project.title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.pm_User.firstname)
+        </td>
+        
+    </tr>
+}
+
+</tbody>
+</table>
+
+
+
+<form action="/Project/Comment/@ViewBag.proj_id" method="post">
+    @Html.AntiForgeryToken()
+       <h4>pm_projectComments</h4>
+        <hr>
+
+
+
+        <div class="form-group">
+            <label class="control-label col-md-2" for="comment">comment</label>
+            <div class="col-md-10">
+                <input class="form-control text-box single-line" id="comment" name="comment" type="text" value="">
+                <span class="field-validation-valid text-danger" data-valmsg-for="comment" data-valmsg-replace="true"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default">
+            </div>
+        </div>
+    </div>
+</form>
+

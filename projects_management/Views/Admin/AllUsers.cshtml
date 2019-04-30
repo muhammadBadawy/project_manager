@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<projects_management.Models.pm_User>
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -12,10 +12,9 @@
     <title>AllUsers</title>
 </head>
 <body>
-    <p>
-        @Html.ActionLink("Create New", "AddUser")
-    </p>
-    <table class="table">
+
+    <table class="table"  id="mytable">
+  <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.firstname)
@@ -44,7 +43,9 @@
             <th></th>
         </tr>
     
-    @foreach (var item in Model) {
+    </thead>
+<tbody>
+@foreach (var item in Model) {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.firstname)
@@ -78,6 +79,7 @@
         </tr>
     }
     
-    </table>
+    </tbody>
+</table>
 </body>
 </html>

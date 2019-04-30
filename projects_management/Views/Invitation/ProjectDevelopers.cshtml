@@ -1,12 +1,22 @@
 ﻿@model IEnumerable<projects_management.Models.pm_projectTeam>
 
-<p>
-    
-</p>
+@{
+    ViewBag.Title = "ProjectDevelopers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{
+    int user_role = int.Parse(Session["user_role_id"].ToString());
+}
+
+<h2>ProjectDevelopers</h2>
+
 <table class="table"  id="mytable">
   <thead>
     <tr>
-       
+        <th>
+            @Html.DisplayNameFor(model => model.state)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.pm_project.title)
         </th>
@@ -23,7 +33,9 @@
 <tbody>
 @foreach (var item in Model) {
     <tr>
-      
+        <td>
+            @Html.DisplayFor(modelItem => item.state)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.pm_project.title)
         </td>
@@ -34,8 +46,11 @@
             @Html.DisplayFor(modelItem => item.pm_Role.role_title)
         </td>
         <td>
-            @Html.ActionLink("Approve", "Approve", new { id=item.id }) 
-    
+            @if (user_role == 3 || user_role == 2)
+            {
+                <a href = "/Feedback/Create/@item.pm_User.id"> Feedback </a>
+                <a href= "/Feedback/SoftDelete/@item.pm_User.id"> Feedback </a>
+            }
         </td>
     </tr>
 }

@@ -7,16 +7,14 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<table class="table"  id="mytable">
+  <thead>
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.state)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.pm_project.title)
+            Project Name
         </th>
         <th>
             @Html.DisplayNameFor(model => model.pm_User.firstname)
@@ -27,10 +25,19 @@
         <th></th>
     </tr>
 
+</thead>
+<tbody>
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.state)
+            @if(item.state == 0)
+            {
+                <p>Pending</p>
+            }
+            else if (item.state == 1)
+            {
+                <p>Accepted</p>
+            }
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.pm_project.title)
@@ -48,4 +55,5 @@
     </tr>
 }
 
+</tbody>
 </table>

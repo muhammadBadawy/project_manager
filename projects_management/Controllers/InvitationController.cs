@@ -16,11 +16,37 @@ namespace projects_management.Controllers
             int id = int.Parse(Session["user_id"].ToString());
             int user_role_id = int.Parse(Session["user_role_id"].ToString());
 
-            if (user_role_id == 5)
+            if (user_role_id == 5 || user_role_id == 1)
             {
                 Response.Redirect(Request.UrlReferrer.ToString());
             }
             var invitations = db.pm_projectTeam.Where(e => e.member_id == id).Where(e => e.state == 0).ToList();
+            return View(invitations);
+        }
+
+        public ActionResult MyProjects()
+        {
+            int id = int.Parse(Session["user_id"].ToString());
+            int user_role_id = int.Parse(Session["user_role_id"].ToString());
+
+            if (user_role_id == 5 || user_role_id == 1)
+            {
+                Response.Redirect(Request.UrlReferrer.ToString());
+            }
+            var invitations = db.pm_projectTeam.Where(e => e.member_id == id).Where(e => e.state == 1).ToList();
+            return View(invitations);
+        }
+
+        public ActionResult ProjectDevelopers(int id)
+        {
+            int user_id = int.Parse(Session["user_id"].ToString());
+            int user_role_id = int.Parse(Session["user_role_id"].ToString());
+
+            if (user_role_id == 5 || user_role_id == 1)
+            {
+                Response.Redirect(Request.UrlReferrer.ToString());
+            }
+            var invitations = db.pm_projectTeam.Where(e => e.project_id == id && e.postion == 4).Where(e => e.state == 1).ToList();
             return View(invitations);
         }
 
@@ -82,5 +108,62 @@ namespace projects_management.Controllers
                 return View("Index");
             }
         }
+
+        public ActionResult InviteMembers(int id)
+        {
+            int user_id = int.Parse(Session["user_id"].ToString());
+            var members = db.pm_User.Where( a => (a.role_id == 3 || a.role_id == 4) && a.id != user_id ).ToList();
+            var members_clone = db.pm_User.Where( a => (a.role_id == 3 || a.role_id == 4) && a.id != user_id ).ToList();
+            var invitations = db.pm_projectTeam.ToList();
+
+            foreach(var member in members_clone)
+            {
+                foreach (var invitation in invitations)
+                {
+                    if (invitation.member_id == member.id && invitation.project_id == id)
+                    {
+                        members.Remove(member);
+                    }
+                }
+            }
+            ViewBag.project_id = id;
+            return View(members);
+        }
+
+        [HttpPost]
+        public ActionResult InviteMemberSave(pm_projectTeam invitation)
+        {
+            //pm_projectTeam invitation = new pm_projectTeam();
+            ////return Content(project_id.ToString() + " " + member_id.ToString());
+            //invitation.member_id = member_id;
+            //invitation.project_id = project_id;
+            invitation.postion = 4;
+            invitation.state = 0;
+
+            db.pm_projectTeam.Add(invitation);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult SoftDelete(int id)
+        {
+            var invitation = db.pm_projectTeam.Find(id);
+            int project_id = int.Parse(invitation.project_id.ToString());
+            if (invitation == null)
+            {
+                return Content("Invitation not found");
+            }
+
+            invitation.state = 3;
+            db.SaveChanges();
+
+            if (true)
+            {
+                Response.Redirect(Request.UrlReferrer.ToString());
+            }
+            return View("Index");
+        }
+
     }
 }
