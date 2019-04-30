@@ -53,30 +53,30 @@ namespace customerApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult CreateProject(pm_project AddPost)
-        {
-            pm_project role = new pm_project();
-            using (DbModels db = new DbModels())
-            {
-                if (!ModelState.IsValid)
-                {
-                    return View("CreateProject", AddPost);
-                }
+        // public ActionResult CreateProject(pm_project AddPost)
+        // {
+        //     pm_project role = new pm_project();
+        //     using (DbModels db = new DbModels())
+        //     {
+        //         if (!ModelState.IsValid)
+        //         {
+        //             return View("CreateProject", AddPost);
+        //         }
 
-                db.pm_project.Add(AddPost);
-                db.SaveChanges();
-
-
-                ViewBag.project_manger_id = new SelectList(db.pm_User, "id", "Email", role.project_manger_id);
-
-                ModelState.Clear();
-                ViewBag.SuccessMessage = " post added!  ";
+        //         db.pm_project.Add(AddPost);
+        //         db.SaveChanges();
 
 
-                return View("AddPost");            //return to customer profile 
+        //         ViewBag.project_manger_id = new SelectList(db.pm_User, "id", "Email", role.project_manger_id);
 
-            }
-        }
+        //         ModelState.Clear();
+        //         ViewBag.SuccessMessage = " post added!  ";
+
+
+        //         return View("AddPost");            //return to customer profile 
+
+        //     }
+        // }
 
         [HttpGet]
         public ActionResult EditProject(int? id)

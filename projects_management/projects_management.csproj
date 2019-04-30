@@ -302,6 +302,10 @@
     <Content Include="Views\Project\Requests.cshtml" />
     <Content Include="Views\Project\History.cshtml" />
     <Content Include="Views\Project\Current.cshtml" />
+    <Content Include="Views\Project\Availablemembers.cshtml" />
+    <Content Include="Views\Project\Manage.cshtml" />
+    <Content Include="Views\Project\Comment.cshtml" />
+    <Content Include="Views\Project\Commenty.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
