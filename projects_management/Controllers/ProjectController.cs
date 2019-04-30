@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 using projects_management.Models;
+using System.Globalization;
 
 namespace projects_management_system.Controllers
 {
@@ -79,10 +81,18 @@ namespace projects_management_system.Controllers
 
         // POST: Project/Create
         [HttpPost]
-        public ActionResult Create(pm_project project)
+        public ActionResult Create(pm_project project)//, HttpPostedFileBase upload
         {
             try
             {
+
+               /* string path = Path.Combine(Server.MapPath("~/Uploads"),  upload.FileName);
+
+                upload.SaveAs(path);
+                project.p_description = upload.FileName;*/
+
+                //project.p_description = upload.FileName;
+
                 // TODO: Add insert logic here
                 //save the id of the user to table
                 project.customer_id = int.Parse(Session["user_id"].ToString());
@@ -363,7 +373,7 @@ namespace projects_management_system.Controllers
             {
                 return HttpNotFound();
             }
-            var projectcomments = db.pm_projectComments.Where(c=> c.project_id == id);
+            var projectcomments = db.pm_projectComments.Where(c => c.project_id == id);
             ViewBag.proj_id = id;
             return View(projectcomments);
         }
@@ -403,16 +413,33 @@ namespace projects_management_system.Controllers
         }
 
 
-        // GET: Project/Approve/5
+        // GET: Project/Deliver/5
         public ActionResult Deliver(int id)
         {
-            pm_project project  = db.pm_project.Find(id);
-             if (project == null)
+            int pm_id = int.Parse(Session["user_id"].ToString());
+            pm_project project = db.pm_project.Find(id);
+            if (project == null)
             {
                 return HttpNotFound();
             }
             //update state
             project.p_state = 0;
+            //skill obj
+            var skills_found = db.pm_personSkill.Where(s => s.project_manger_id == pm_id).FirstOrDefault();
+            if (skills_found == null)
+            {
+                pm_personSkill pm_skill = new pm_personSkill();
+                pm_skill.project_manger_id = pm_id;
+                pm_skill.skill = "Projects";
+                pm_skill.ps_level = 1;
+                db.pm_personSkill.Add(pm_skill);
+            }
+            else
+            {
+                //inc skilss
+                skills_found.ps_level += skills_found.ps_level;
+            }
+
             db.SaveChanges();
 
             return RedirectToAction("Current");
@@ -436,5 +463,30 @@ namespace projects_management_system.Controllers
                 return RedirectToAction("Index");
             }
         }
+
+        public ActionResult MembersDeleted(int id)
+        {
+            return View(db.pm_projectTeam.Where(t => t.state == 3 && t.project_id == id));
+        }
+
+        // GET: Project/MembersDeleted
+        public ActionResult ConfirmDeleteRequest(int id)
+        {
+            var team_req = db.pm_projectTeam.Find(id);
+            db.pm_projectTeam.Remove(team_req);
+            db.SaveChanges();
+
+            return RedirectToAction("MembersDeleted");
+        }
+
+         // GET: Project/MembersDeleted
+        public ActionResult CancelDeleteRequest(int id)
+        {
+               var team_req = db.pm_projectTeam.Find(id);
+               team_req.state = 1;
+               db.SaveChanges();
+               return RedirectToAction("MembersDeleted");
+        }
+        
     }
 }

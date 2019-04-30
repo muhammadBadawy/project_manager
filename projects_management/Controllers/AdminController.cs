@@ -17,7 +17,10 @@ namespace projects_management.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            int id = int.Parse(Session["user_id"].ToString());
+            pm_User user = db.pm_User.Where(e => e.id == id).FirstOrDefault();
+            ViewBag.skill = user.pm_personSkill.FirstOrDefault();
+            return View(user);
         }
 
         // GET: Admin

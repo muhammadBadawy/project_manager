@@ -1,0 +1,122 @@
+﻿@model projects_management.Models.pm_User
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>User profile</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.firstname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.firstname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lastname)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lastname)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.mobile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.mobile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.photo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.photo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pm_Role.role_title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pm_Role.role_title)
+        </dd>
+
+    </dl>
+</div>
+
+<div id="container" style="width: 100%; height: 400px"></div>
+<script>
+    anychart.onDocumentReady(function () {
+
+        // set the data
+        var data = [
+            { x: "@Html.DisplayFor( model => model.pm_personSkill.FirstOrDefault().skill )", value: @Html.DisplayFor(model => model.pm_personSkill.FirstOrDefault().ps_level) },
+            { x: "Remaining", value: 10 }
+        ];
+
+        // create the chart
+        var chart = anychart.pie();
+
+        // set the chart title
+        chart.title("My Experience");
+
+        // add the data
+        chart.data(data);
+
+        // display the chart in the container
+        chart.container('container');
+        chart.draw();
+
+    });
+</script>
+
+<div id="containerBar" style="width: 100%; height: 400px">
+    <script>
+        anychart.onDocumentLoad(function() {
+        // create the data
+        var data = [
+                { x: "@Html.DisplayFor( model => model.pm_personSkill.FirstOrDefault().skill )", y: @Html.DisplayFor(model => model.pm_personSkill.FirstOrDefault().ps_level) }
+            ];
+        var chart = anychart.bar(); // create a chart
+        chart.title('Experience'); // create title for the chart
+        chart.xAxis().title("Skills"); // create name for X axis
+        chart.yAxis().title("Experience Level"); // create name for Y axis
+        var series = chart.bar(data); // create bar series and pass data
+        chart.container("containerBar"); // reference the container Id
+        chart.draw(); // initiate drawing the bar chart
+          });
+    </script>
+</div>
