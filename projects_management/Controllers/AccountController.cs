@@ -84,6 +84,8 @@ namespace projects_management_system.Controllers
                 Session["user_id"] = usr.id.ToString();
                 Session["user_email"] = usr.email.ToString();
                 Session["user_role_id"] = usr.role_id.ToString();
+                Session["user_name"] = usr.firstname.ToString() + " " + usr.lastname.ToString();
+                Session["user_photo"] = usr.photo.ToString();
 
                 //get user role to switch the views of the actors
                 int user_role = usr.role_id.Value;
@@ -150,6 +152,8 @@ namespace projects_management_system.Controllers
             Session["user_id"] = null;
             Session["user_email"] = null;
             Session["user_role_id"] = null;
+            Session["user_name"] = null;
+            Session["user_photo"] = null;
             Session.Clear();
             Session.Abandon();
             return RedirectToAction("Login", "Account");

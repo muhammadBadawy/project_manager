@@ -87,13 +87,19 @@
         @if (user_role == 5 || user_role == 1)
         {
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.id }) |
                 @Html.ActionLink("Show Requests", "Requests", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id })
                 @if(user_role == 1 && item.admin_approved != 1)
                 {
-                    @Html.ActionLink("AdminApprove", "AdminApprove", new { id = item.id })
+                    @Html.ActionLink("AdminApprove", "AdminApprove", new { id = item.id }) <p>|</p>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                }
+                @if (user_role == 5 && item.admin_approved != 1)
+                {
+                    @Html.ActionLink("Edit", "Edit", new { id = item.id }) <p>|</p>
+                    @Html.ActionLink("Delete", "Delete", new { id = item.id })
+
                 }
             </td>
 

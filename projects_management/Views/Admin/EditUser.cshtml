@@ -7,7 +7,7 @@
 
 <h2>AdminProfile</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("EditUser", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -55,13 +55,13 @@
             </div>
         </div>
 
-        <div class="form-group" typeof="imge">
+        <div class="form-group">
             @Html.LabelFor(model => model.photo, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.photo, new { type = "file" })
-                    @Html.ValidationMessageFor(model => model.photo, "", new { @class = "text-danger" })
-                </div>
+                <input type="file" name="upload" />
+                @Html.ValidationMessageFor(model => model.photo, "", new { @class = "text-danger" })
             </div>
+        </div>
 
             <div class="form-group">
                 @Html.LabelFor(model => model.description, htmlAttributes: new { @class = "control-label col-md-2" })

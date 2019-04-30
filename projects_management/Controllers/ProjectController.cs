@@ -24,12 +24,27 @@ namespace projects_management_system.Controllers
             {
 
 
-                return View(db.pm_project.Where(p => p.admin_approved == 1 && p.customer_id == user_id));
+                return View(db.pm_project.Where(p => p.customer_id == user_id));
             }
             else if (user_role_id == 2)//if Project manager get Project manager approved projects
             {
+                var projects = db.pm_project.Where(p => p.admin_approved == 1 && p.project_manger_id == null).ToList();
+                var projects_clone = db.pm_project.Where(p => p.admin_approved == 1 && p.project_manger_id == null).ToList();
+                var invitations = db.pm_projectTeam.ToList();
+
+                foreach (var project in projects_clone)
+                {
+                    foreach (var invitation in invitations)
+                    {
+                        if (invitation.member_id == user_id && invitation.project_id == project.id)
+                        {
+                            projects.Remove(project);
+                        }
+                    }
+                }
+
                 //Get all projects approved by admin
-                return View(db.pm_project.Where(p => p.admin_approved == 1 && p.project_manger_id == null));
+                return View(projects);
             }
             else if (user_role_id == 3 || user_role_id == 4)//if Project team leader or developer get my projects
             {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.IO;
 using System.Web.Security;
 
 namespace projects_management.Controllers
@@ -30,13 +31,18 @@ namespace projects_management.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddUser(pm_User userModel)
+        public ActionResult AddUser(pm_User userModel, HttpPostedFileBase upload)
         {
 
             if (!ModelState.IsValid)
             {
                 return Content("Not valid bro?!");
             }
+
+            string path = Path.Combine(Server.MapPath("~/Uploads"), upload.FileName);
+
+            upload.SaveAs(path);
+            userModel.photo = upload.FileName;
 
             db.pm_User.Add(userModel);
             db.SaveChanges();
@@ -63,7 +69,7 @@ namespace projects_management.Controllers
 
         [HttpPost]
 
-        public ActionResult EditUser(pm_User editUsers)
+        public ActionResult EditUser(pm_User editUsers, HttpPostedFileBase upload)
         {
 
             if (!ModelState.IsValid)

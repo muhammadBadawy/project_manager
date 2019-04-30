@@ -48,8 +48,8 @@
         <td>
             @if (user_role == 3 || user_role == 2)
             {
-                <a href = "/Feedback/Create/@item.pm_User.id"> Feedback </a>
-                <a href= "/Feedback/SoftDelete/@item.pm_User.id"> Feedback </a>
+                <a href="/Feedback/Create/@item.id"> Feedback </a> <p>|</p>
+                <a href= "/Invitation/SoftDelete/@item.id"> Delete </a>
             }
         </td>
     </tr>
