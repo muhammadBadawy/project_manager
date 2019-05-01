@@ -108,7 +108,7 @@
         anychart.onDocumentLoad(function() {
         // create the data
         var data = [
-                { x: "@Html.DisplayFor( model => model.pm_personSkill.FirstOrDefault().skill )", y: @Html.DisplayFor(model => model.pm_personSkill.FirstOrDefault().ps_level) }
+                { x: "@Html.DisplayFor( model => model.pm_personSkill.FirstOrDefault().skill )", y: "@Html.DisplayFor(model => model.pm_personSkill.FirstOrDefault().ps_level)" }
             ];
         var chart = anychart.bar(); // create a chart
         chart.title('Experience'); // create title for the chart

@@ -80,13 +80,20 @@ namespace projects_management.Controllers
                 return View("EditUser", editUsers);
             }
 
+            string path = Path.Combine(Server.MapPath("~/Uploads"), upload.FileName);
+
+            upload.SaveAs(path);
+            editUsers.photo = upload.FileName;
+
+            db.pm_User.Add(editUsers);
+            db.SaveChanges();
+
             var UserDB = db.pm_User.Single(a => a.id == editUsers.id);
             UserDB.firstname = editUsers.firstname;
             UserDB.lastname = editUsers.lastname;
             UserDB.email = editUsers.email;
             UserDB.password = editUsers.password;
             UserDB.mobile = editUsers.mobile;
-            UserDB.photo = editUsers.photo;
 
             db.SaveChanges();
             return View("EditUser", UserDB);   //***** page that are U redirect to it

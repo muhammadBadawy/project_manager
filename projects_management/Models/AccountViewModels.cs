@@ -7,6 +7,7 @@ namespace projects_management.Models
     {
         [Required]
         [Display(Name = "Email")]
+        [RegularExpression(@"^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$", ErrorMessage = "Please Enter Correct Email Address")]
         public string Email { get; set; }
     }
 
@@ -56,6 +57,7 @@ namespace projects_management.Models
         [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         public string Password { get; set; }
 
         [Display(Name = "Remember me?")]
