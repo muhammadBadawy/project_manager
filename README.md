@@ -1,6 +1,6 @@
 <h1><a id="The_Project_manager_0"></a>The Project manager</h1>
-<p>This project is a web application made with <a href="http://ASP.net">ASP.net</a></p>
-<p>A projects management system is a web application that allows customers that have projects to communicate and hire project managers and Team leaders to accomplish and deliver their projects in an easy and fast way.</p>
+<p>This project is Projects Management System for Constructions and Real Estate <a href="http://ASP.net">ASP.net</a></p>
+<p>A Constructions and Real Estate projects management system is a web application that allows customers that have projects want to establish it in to communicate and hire project managers and Team leaders to accomplish and deliver their projects in an easy and fast way..</p>
 <p>Actors (Five actors):</p>
 <ul>
 <li>Admin</li>
